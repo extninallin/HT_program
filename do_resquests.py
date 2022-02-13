@@ -1,8 +1,9 @@
-from numpy import append
 from pandas import read_csv
 import asyncio
 import aiohttp
 import time
+import PySimpleGUI as sg
+
 
 url = 'https://internal-api.mercadolibre.com/sites/{}/users/{}/handling_time?logistic_type={}'
 # list_seller = read_csv("MLA__SSHP-359043_sellers_XD.csv")
@@ -47,6 +48,7 @@ def get_backup(site, logistic_type, csv_file):
         asyncio.run(get_backup_async(site, logistic_type, lista))
         end = time.time()
         total_time = end - start
+        # sg.one_line_progress_meter('One Line Meter Example',start, end, 'This is my custom message', orientation='h')
         print("It took {} seconds to make {} API calls".format(
             total_time, len(lista)))
 

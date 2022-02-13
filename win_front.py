@@ -45,7 +45,16 @@ while True:
               " logistic type "+values["log_type"]+" y se va hacer un  " + values["action"])
         if sg.popup_ok_cancel("Esta por realizar un "+values["action"]+" en el site "+values["site"] +
                            " con la logistic type "+values["log_type"]+" ¿Son correctos los datos? ") == "OK":
-            request.get_backup(values["site"], values["log_type"], file_csv_name)
+            try:
+                request.get_backup(values["site"], values["log_type"], file_csv_name)
+                sg.popup_ok("Se pudo realizar el backup, controlar la carpeta donde esta el ejecutable por el archivo txt")
+                window["-IN2-"].update([])
+                window["action"].update("")
+                window["site"].update("")
+                window["log_type"].update("")
+            except Exception as e:
+                 sg.popup_error(f"NOK - Algo salio mal: {e}")
+                #  print(f"NOK - Algo salio mal: {e}")
    
    #seleccion Rollback
     elif event == "Ok" and values["action"] == "Rollback" and values["site"] != "" and values["log_type"] != "":
@@ -54,7 +63,15 @@ while True:
               " logistic type "+values["log_type"]+" y se va hacer un  " + values["action"])
         if sg.popup_ok_cancel("Esta por realizar un "+values["action"]+" en el site "+values["site"] +
                            " con la logistic type "+values["log_type"]+" ¿Son correctos los datos? ") == "OK":
-            request.post_backup(values["site"], values["log_type"], file_csv_name)
+            try:
+                request.post_backup(values["site"], values["log_type"], file_csv_name)
+                sg.popup_ok("Se pudo realizar el rollback")
+                window["-IN2-"].update([])
+                window["action"].update("")
+                window["site"].update("")
+                window["log_type"].update("")
+            except Exception as e:
+               sg.popup_error(f"NOK - Algo salio mal: {e}")
 
     # sin seleccion de Site y Log type
     elif event == "Ok" and values["site"] == "" or values["log_type"] == "" or values["action"] == "":
